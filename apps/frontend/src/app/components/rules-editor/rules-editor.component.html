@@ -1,0 +1,159 @@
+<div class="rules-editor-container">
+  <!-- Toolbar -->
+  <mat-toolbar color="primary">
+    <span>Rules Editor</span>
+    <span class="spacer"></span>
+    <button mat-raised-button color="accent" (click)="loadRules()" [disabled]="isLoading">
+      <mat-icon>refresh</mat-icon>
+      Load
+    </button>
+    <button mat-raised-button color="warn" (click)="validateRules()" [disabled]="isLoading || !decisionTable">
+      <mat-icon>check_circle</mat-icon>
+      Validate
+    </button>
+    <button mat-raised-button color="accent" (click)="saveRules()" 
+            [disabled]="isLoading || !decisionTable || !hasUnsavedChanges">
+      <mat-icon>save</mat-icon>
+      Save
+    </button>
+    <span *ngIf="hasUnsavedChanges" class="unsaved-indicator">
+      <mat-icon>edit</mat-icon>
+      Unsaved changes
+    </span>
+  </mat-toolbar>
+
+  <div class="content-container" *ngIf="decisionTable">
+    <mat-sidenav-container class="sidenav-container">
+      <!-- Main content -->
+      <mat-sidenav-content class="main-content">
+        <!-- Template Panel (Read-only sticky) -->
+        <mat-card class="template-panel">
+          <mat-card-header>
+            <mat-card-title>Template Row (How $param is used)</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="template-grid">
+              <div *ngFor="let header of decisionTable.headers; let i = index" class="template-cell">
+                <strong>{{ header }}:</strong>
+                <span class="template-text">{{ getTemplateForColumn(i) || 'No template' }}</span>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Rules Table -->
+        <div class="table-container">
+          <div class="table-actions">
+            <button mat-raised-button color="primary" (click)="addRow()">
+              <mat-icon>add</mat-icon>
+              Add Row
+            </button>
+          </div>
+
+          <table mat-table [dataSource]="decisionTable.rows" class="rules-table">
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let row; let i = index" class="actions-cell">
+                <button mat-icon-button color="primary" (click)="cloneRow(i)" title="Clone Row">
+                  <mat-icon>content_copy</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteRow(i)" title="Delete Row">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <!-- Dynamic Columns -->
+            <ng-container *ngFor="let header of decisionTable.headers; let colIndex = index" 
+                          [matColumnDef]="'col_' + colIndex">
+              <th mat-header-cell *matHeaderCellDef>{{ header }}</th>
+              <td mat-cell *matCellDef="let row; let rowIndex = index" class="data-cell">
+                <div class="cell-content">
+                  <!-- Name column (first column) -->
+                  <mat-form-field *ngIf="colIndex === 0" appearance="outline" class="cell-input">
+                    <input matInput [(ngModel)]="row.name" (ngModelChange)="onCellValueChange()"
+                           placeholder="Rule name">
+                  </mat-form-field>
+
+                  <!-- Boolean input -->
+                  <mat-slide-toggle *ngIf="colIndex > 0 && isBooleanInput(colIndex)"
+                                    [(ngModel)]="row.values[colIndex - 1]"
+                                    (ngModelChange)="onCellValueChange()">
+                  </mat-slide-toggle>
+
+                  <!-- Numeric input -->
+                  <mat-form-field *ngIf="colIndex > 0 && isNumericInput(colIndex)" 
+                                  appearance="outline" class="cell-input">
+                    <input matInput type="number" [(ngModel)]="row.values[colIndex - 1]"
+                           (ngModelChange)="onCellValueChange()" placeholder="Number">
+                  </mat-form-field>
+
+                  <!-- Text input -->
+                  <mat-form-field *ngIf="colIndex > 0 && !isBooleanInput(colIndex) && !isNumericInput(colIndex)"
+                                  appearance="outline" class="cell-input">
+                    <input matInput [(ngModel)]="row.values[colIndex - 1]"
+                           (ngModelChange)="onCellValueChange()" placeholder="Text">
+                  </mat-form-field>
+
+                  <!-- Error chips -->
+                  <div class="error-chips" *ngIf="getErrorsForCell(rowIndex, colIndex).length > 0">
+                    <mat-chip-set>
+                      <mat-chip *ngFor="let error of getErrorsForCell(rowIndex, colIndex)" 
+                                color="warn" selected>
+                        {{ error.message }}
+                      </mat-chip>
+                    </mat-chip-set>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index"
+                [class.error-row]="getErrorsForCell(i, -1).length > 0"></tr>
+          </table>
+        </div>
+      </mat-sidenav-content>
+
+      <!-- Validation Sidebar -->
+      <mat-sidenav mode="side" opened position="end" class="validation-sidebar" 
+                   *ngIf="validationErrors.length > 0">
+        <mat-toolbar color="warn">
+          <mat-icon>error</mat-icon>
+          <span>Validation Errors ({{ validationErrors.length }})</span>
+        </mat-toolbar>
+        
+        <mat-nav-list>
+          <mat-list-item *ngFor="let error of getGeneralErrors()">
+            <mat-icon matListItemIcon color="warn">error</mat-icon>
+            <div matListItemTitle>{{ error.message }}</div>
+          </mat-list-item>
+          
+          <mat-list-item *ngFor="let error of getRowSpecificErrors()">
+            <mat-icon matListItemIcon color="warn">error</mat-icon>
+            <div matListItemTitle>Row {{ error.row! + 1 }}, Col {{ error.col! + 1 }}</div>
+            <div matListItemLine>{{ error.message }}</div>
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-sidenav>
+    </mat-sidenav-container>
+  </div>
+
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Loading...</p>
+  </div>
+
+  <!-- No data message -->
+  <div *ngIf="!decisionTable && !isLoading" class="no-data-container">
+    <mat-icon>description</mat-icon>
+    <h2>No Rules Loaded</h2>
+    <p>Click "Load" to load rules from the Excel file.</p>
+    <button mat-raised-button color="primary" (click)="loadRules()">
+      <mat-icon>refresh</mat-icon>
+      Load Rules
+    </button>
+  </div>
+</div>

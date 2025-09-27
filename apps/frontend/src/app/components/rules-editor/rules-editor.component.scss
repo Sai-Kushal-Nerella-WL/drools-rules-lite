@@ -1,0 +1,155 @@
+.rules-editor-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.unsaved-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #ffc107;
+  font-size: 14px;
+  margin-left: 16px;
+}
+
+.content-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidenav-container {
+  flex: 1;
+}
+
+.main-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.template-panel {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #f5f5f5;
+  border: 2px solid #2196f3;
+}
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.template-cell {
+  padding: 8px;
+  background: white;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.template-text {
+  display: block;
+  font-family: monospace;
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.table-container {
+  flex: 1;
+  overflow: auto;
+}
+
+.table-actions {
+  margin-bottom: 16px;
+}
+
+.rules-table {
+  width: 100%;
+  background: white;
+}
+
+.actions-cell {
+  width: 120px;
+  min-width: 120px;
+}
+
+.data-cell {
+  min-width: 150px;
+  padding: 8px;
+}
+
+.cell-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cell-input {
+  width: 100%;
+  min-width: 120px;
+}
+
+.error-chips {
+  margin-top: 4px;
+}
+
+.error-row {
+  background-color: #ffebee;
+}
+
+.validation-sidebar {
+  width: 300px;
+  border-left: 1px solid #ddd;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  gap: 16px;
+}
+
+.no-data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  gap: 16px;
+  text-align: center;
+  color: #666;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .template-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .validation-sidebar {
+    width: 100%;
+    position: absolute;
+    z-index: 20;
+  }
+  
+  .cell-input {
+    min-width: 100px;
+  }
+}

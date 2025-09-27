@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+rules:
+  path: ../../rules/DiscountRules.xlsx
+
+spring:
+  web:
+    cors:
+      allowed-origins: "http://localhost:4200"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

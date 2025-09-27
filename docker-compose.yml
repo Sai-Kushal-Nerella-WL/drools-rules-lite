@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./apps/backend
+    ports:
+      - "8080:8080"
+    environment:
+      - RULES_PATH=/app/rules/DiscountRules.xlsx
+    volumes:
+      - ./rules:/app/rules:rw
+    networks:
+      - rules-network
+
+  frontend:
+    build: ./apps/frontend
+    ports:
+      - "4200:4200"
+    environment:
+      - API_BASE=http://localhost:8080
+    depends_on:
+      - backend
+    networks:
+      - rules-network
+
+networks:
+  rules-network:
+    driver: bridge
