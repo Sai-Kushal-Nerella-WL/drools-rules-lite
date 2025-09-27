@@ -3,15 +3,15 @@
   <mat-toolbar color="primary">
     <span>Rules Editor</span>
     <span class="spacer"></span>
-    <button mat-raised-button color="accent" (click)="loadRules()" [disabled]="isLoading">
+    <button mat-raised-button color="primary" (click)="loadRules()" [disabled]="isLoading">
       <mat-icon>refresh</mat-icon>
       Load
     </button>
-    <button mat-raised-button color="warn" (click)="validateRules()" [disabled]="isLoading || !decisionTable">
+    <button mat-raised-button color="primary" (click)="validateRules()" [disabled]="isLoading || !decisionTable">
       <mat-icon>check_circle</mat-icon>
       Validate
     </button>
-    <button mat-raised-button color="accent" (click)="saveRules()" 
+    <button mat-raised-button color="primary" (click)="saveRules()" 
             [disabled]="isLoading || !decisionTable || !hasUnsavedChanges">
       <mat-icon>save</mat-icon>
       Save
