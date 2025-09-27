@@ -1,1 +1,136 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles for Rules Editor */
+
+/* Custom color palette */
+:root {
+  --primary-color: #1976d2;
+  --primary-light: #42a5f5;
+  --primary-dark: #1565c0;
+  --accent-color: #ff4081;
+  --warn-color: #f44336;
+  --success-color: #4caf50;
+  --background-color: #fafafa;
+  --surface-color: #ffffff;
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  --border-color: #e0e0e0;
+  --shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-medium: 0 4px 8px rgba(0,0,0,0.15);
+  --shadow-heavy: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+/* Global typography */
+body {
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* Smooth transitions */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Material Design enhancements */
+.mat-mdc-raised-button {
+  box-shadow: var(--shadow-light) !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  padding: 0 24px !important;
+  height: 40px !important;
+}
+
+.mat-mdc-raised-button:hover {
+  box-shadow: var(--shadow-medium) !important;
+  transform: translateY(-1px);
+}
+
+.mat-mdc-icon-button {
+  border-radius: 50% !important;
+}
+
+.mat-mdc-form-field {
+  .mat-mdc-form-field-outline {
+    border-radius: 8px !important;
+  }
+}
+
+.mat-mdc-card {
+  border-radius: 12px !important;
+  box-shadow: var(--shadow-light) !important;
+  border: 1px solid var(--border-color);
+}
+
+.mat-mdc-card:hover {
+  box-shadow: var(--shadow-medium) !important;
+}
+
+/* Chip styling */
+.mat-mdc-chip {
+  border-radius: 16px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+/* Table styling */
+.mat-mdc-table {
+  border-radius: 8px !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-light) !important;
+}
+
+.mat-mdc-header-row {
+  background-color: #f8f9fa !important;
+  font-weight: 600 !important;
+}
+
+.mat-mdc-row:hover {
+  background-color: #f5f5f5 !important;
+}
+
+/* Toolbar styling */
+.mat-toolbar {
+  box-shadow: var(--shadow-light) !important;
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
