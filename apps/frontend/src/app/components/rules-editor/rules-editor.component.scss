@@ -61,11 +61,12 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin: 16px;
-  border-radius: 16px;
+  margin: 20px;
+  border-radius: 20px;
   background: var(--surface-color);
-  box-shadow: var(--shadow-heavy);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   overflow: hidden;
+  border: none;
 }
 
 .sidenav-container {
@@ -74,10 +75,10 @@
 }
 
 .main-content {
-  padding: 24px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
   background: var(--background-color);
 }
 
@@ -117,16 +118,16 @@
 }
 
 .template-cell {
-  padding: 16px;
+  padding: 20px;
   background: white;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-light);
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transition: all 0.2s ease;
   
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-medium);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   }
   
   strong {
@@ -156,9 +157,10 @@
   flex: 1;
   overflow: auto;
   background: white;
-  border-radius: 12px;
-  box-shadow: var(--shadow-light);
-  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: none;
+  padding: 8px;
 }
 
 .table-actions {
@@ -182,9 +184,11 @@
 .rules-table {
   width: 100%;
   background: white;
+  border: none !important;
   
   .mat-mdc-header-row {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+    border: none !important;
     
     .mat-mdc-header-cell {
       font-weight: 600;
@@ -192,23 +196,28 @@
       font-size: 14px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      border-bottom: 2px solid var(--primary-color);
+      border: none !important;
+      border-bottom: 1px solid rgba(25, 118, 210, 0.2) !important;
+      padding: 16px 12px;
     }
   }
   
   .mat-mdc-row {
+    border: none !important;
+    
     &:nth-child(even) {
-      background-color: #fafafa;
+      background-color: rgba(248, 249, 250, 0.5);
     }
     
     &:hover {
-      background-color: #f0f7ff !important;
-      transform: scale(1.001);
+      background-color: rgba(240, 247, 255, 0.8) !important;
+      transform: none;
     }
     
     .mat-mdc-cell {
-      border-bottom: 1px solid #f0f0f0;
-      padding: 12px 8px;
+      border: none !important;
+      border-bottom: 1px solid rgba(224, 224, 224, 0.3) !important;
+      padding: 16px 12px;
     }
   }
 }
@@ -216,23 +225,25 @@
 .actions-cell {
   width: 140px;
   min-width: 140px;
+  padding: 16px 12px;
   
   .mat-mdc-icon-button {
-    margin: 0 4px;
-    width: 36px;
-    height: 36px;
+    margin: 0 6px;
+    width: 40px;
+    height: 40px;
+    border: none;
     
     &:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
     
     &[color="primary"] {
-      background: rgba(25, 118, 210, 0.1);
+      background: rgba(25, 118, 210, 0.08);
       color: var(--primary-color);
     }
     
     &[color="warn"] {
-      background: rgba(244, 67, 54, 0.1);
+      background: rgba(244, 67, 54, 0.08);
       color: var(--warn-color);
     }
   }
@@ -240,7 +251,7 @@
 
 .data-cell {
   min-width: 180px;
-  padding: 12px 8px;
+  padding: 16px 12px;
 }
 
 .cell-content {
@@ -302,13 +313,14 @@
 .validation-sidebar {
   width: 320px;
   background: white;
-  border-left: 1px solid var(--border-color);
-  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+  border-left: none;
+  box-shadow: -2px 0 20px rgba(0, 0, 0, 0.08);
   animation: slideInRight 0.3s ease-out;
   
   .mat-toolbar {
     background: var(--warn-color) !important;
     color: white !important;
+    border: none;
     
     mat-icon {
       margin-right: 8px;
@@ -316,11 +328,13 @@
   }
   
   .mat-mdc-list-item {
-    border-bottom: 1px solid #f0f0f0;
-    padding: 16px;
+    border-bottom: 1px solid rgba(240, 240, 240, 0.5);
+    padding: 20px;
+    margin: 0 8px;
+    border-radius: 8px;
     
     &:hover {
-      background: #f8f9fa;
+      background: rgba(248, 249, 250, 0.8);
     }
     
     .mat-mdc-list-item-icon {
